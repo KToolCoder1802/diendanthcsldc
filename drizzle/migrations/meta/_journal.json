@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791343634744,
+      "tag": "0000_forum_schema",
+      "breakpoints": true
+    }
+  ]
 }

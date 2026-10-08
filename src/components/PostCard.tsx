@@ -38,8 +38,6 @@ export function PostCard({ post, showSection = false, defaultOpen = false }: { p
   const [report, setReport] = useState(false);
   const [picker, setPicker] = useState(false);
 
-  const mine = me?.reactions ?? null; // không dùng
-  void mine;
   const myReaction = post.reactions.find((r) => r.user_id === me?.userId)?.type;
   const isOwner = me?.userId === post.author_id;
   const canPin = me?.isAdmin || (post.section === "announce" && (me?.profile?.tick === "gold" || me?.profile?.tick === "pink"));
@@ -139,7 +137,6 @@ export function PostCard({ post, showSection = false, defaultOpen = false }: { p
         <button
           onClick={() => (myReaction ? react(myReaction) : setPicker(!picker))}
           onContextMenu={(e) => { e.preventDefault(); setPicker(!picker); }}
-          onMouseEnter={() => setPicker(true)}
           className={`flex flex-1 items-center justify-center gap-1.5 rounded-md py-2 text-sm font-semibold hover:bg-muted ${current ? "text-primary" : "text-muted-foreground"}`}
         >
           <span>{current ? current.emoji : "👍"}</span> {current ? current.label : "Thích"}
@@ -148,7 +145,7 @@ export function PostCard({ post, showSection = false, defaultOpen = false }: { p
           <MessageCircle className="h-4 w-4" /> Bình luận
         </button>
       </div>
-      {picker && <div className="fixed inset-0 z-0" onClick={() => setPicker(false)} onMouseEnter={() => setPicker(false)} />}
+      {picker && <div className="fixed inset-0 z-0" onClick={() => setPicker(false)} />}
 
       {showComments && <div className="px-4 pb-4"><Comments postId={post.id} /></div>}
       {me && <ReportDialog open={report} onOpenChange={setReport} postId={post.id} userId={me.userId} />}

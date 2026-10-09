@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as DangKyRouteImport } from './routes/dang-ky'
+import { Route as DangKyGiaoVienRouteImport } from './routes/dang-ky-giao-vien'
 import { Route as DangNhapRouteImport } from './routes/dang-nhap'
 import { Route as AuthenticatedBangTinRouteImport } from './routes/_authenticated/bang-tin'
 import { Route as AuthenticatedDienDanGvRouteImport } from './routes/_authenticated/dien-dan-gv'
@@ -30,6 +31,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const DangKyRoute = DangKyRouteImport.update({
   id: '/dang-ky',
   path: '/dang-ky',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DangKyGiaoVienRoute = DangKyGiaoVienRouteImport.update({
+  id: '/dang-ky-giao-vien',
+  path: '/dang-ky-giao-vien',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DangNhapRoute = DangNhapRouteImport.update({
@@ -61,6 +67,7 @@ const AuthenticatedThongBaoRoute = AuthenticatedThongBaoRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dang-ky': typeof DangKyRoute
+  '/dang-ky-giao-vien': typeof DangKyGiaoVienRoute
   '/dang-nhap': typeof DangNhapRoute
   '/bang-tin': typeof AuthenticatedBangTinRoute
   '/dien-dan-gv': typeof AuthenticatedDienDanGvRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dang-ky': typeof DangKyRoute
+  '/dang-ky-giao-vien': typeof DangKyGiaoVienRoute
   '/dang-nhap': typeof DangNhapRoute
   '/bang-tin': typeof AuthenticatedBangTinRoute
   '/dien-dan-gv': typeof AuthenticatedDienDanGvRoute
@@ -81,6 +89,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/dang-ky': typeof DangKyRoute
+  '/dang-ky-giao-vien': typeof DangKyGiaoVienRoute
   '/dang-nhap': typeof DangNhapRoute
   '/_authenticated/bang-tin': typeof AuthenticatedBangTinRoute
   '/_authenticated/dien-dan-gv': typeof AuthenticatedDienDanGvRoute
@@ -92,6 +101,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dang-ky'
+    | '/dang-ky-giao-vien'
     | '/dang-nhap'
     | '/bang-tin'
     | '/dien-dan-gv'
@@ -101,6 +111,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/dang-ky'
+    | '/dang-ky-giao-vien'
     | '/dang-nhap'
     | '/bang-tin'
     | '/dien-dan-gv'
@@ -111,6 +122,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/dang-ky'
+    | '/dang-ky-giao-vien'
     | '/dang-nhap'
     | '/_authenticated/bang-tin'
     | '/_authenticated/dien-dan-gv'
@@ -122,6 +134,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   DangKyRoute: typeof DangKyRoute
+  DangKyGiaoVienRoute: typeof DangKyGiaoVienRoute
   DangNhapRoute: typeof DangNhapRoute
 }
 
@@ -146,6 +159,13 @@ declare module '@tanstack/react-router' {
       path: '/dang-ky'
       fullPath: '/dang-ky'
       preLoaderRoute: typeof DangKyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dang-ky-giao-vien': {
+      id: '/dang-ky-giao-vien'
+      path: '/dang-ky-giao-vien'
+      fullPath: '/dang-ky-giao-vien'
+      preLoaderRoute: typeof DangKyGiaoVienRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dang-nhap': {
@@ -207,6 +227,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   DangKyRoute: DangKyRoute,
+  DangKyGiaoVienRoute: DangKyGiaoVienRoute,
   DangNhapRoute: DangNhapRoute,
 }
 export const routeTree = rootRouteImport

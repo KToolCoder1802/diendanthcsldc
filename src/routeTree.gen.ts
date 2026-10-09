@@ -10,12 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as DangKyRouteImport } from './routes/dang-ky'
 import { Route as DangNhapRouteImport } from './routes/dang-nhap'
+import { Route as AuthenticatedBangTinRouteImport } from './routes/_authenticated/bang-tin'
+import { Route as AuthenticatedDienDanGvRouteImport } from './routes/_authenticated/dien-dan-gv'
+import { Route as AuthenticatedGocUpdateRouteImport } from './routes/_authenticated/goc-update'
+import { Route as AuthenticatedThongBaoRouteImport } from './routes/_authenticated/thong-bao'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DangKyRoute = DangKyRouteImport.update({
@@ -28,33 +37,90 @@ const DangNhapRoute = DangNhapRouteImport.update({
   path: '/dang-nhap',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedBangTinRoute = AuthenticatedBangTinRouteImport.update({
+  id: '/bang-tin',
+  path: '/bang-tin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDienDanGvRoute = AuthenticatedDienDanGvRouteImport.update({
+  id: '/dien-dan-gv',
+  path: '/dien-dan-gv',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedGocUpdateRoute = AuthenticatedGocUpdateRouteImport.update({
+  id: '/goc-update',
+  path: '/goc-update',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedThongBaoRoute = AuthenticatedThongBaoRouteImport.update({
+  id: '/thong-bao',
+  path: '/thong-bao',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dang-ky': typeof DangKyRoute
   '/dang-nhap': typeof DangNhapRoute
+  '/bang-tin': typeof AuthenticatedBangTinRoute
+  '/dien-dan-gv': typeof AuthenticatedDienDanGvRoute
+  '/goc-update': typeof AuthenticatedGocUpdateRoute
+  '/thong-bao': typeof AuthenticatedThongBaoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dang-ky': typeof DangKyRoute
   '/dang-nhap': typeof DangNhapRoute
+  '/bang-tin': typeof AuthenticatedBangTinRoute
+  '/dien-dan-gv': typeof AuthenticatedDienDanGvRoute
+  '/goc-update': typeof AuthenticatedGocUpdateRoute
+  '/thong-bao': typeof AuthenticatedThongBaoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/dang-ky': typeof DangKyRoute
   '/dang-nhap': typeof DangNhapRoute
+  '/_authenticated/bang-tin': typeof AuthenticatedBangTinRoute
+  '/_authenticated/dien-dan-gv': typeof AuthenticatedDienDanGvRoute
+  '/_authenticated/goc-update': typeof AuthenticatedGocUpdateRoute
+  '/_authenticated/thong-bao': typeof AuthenticatedThongBaoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dang-ky' | '/dang-nhap'
+  fullPaths:
+    | '/'
+    | '/dang-ky'
+    | '/dang-nhap'
+    | '/bang-tin'
+    | '/dien-dan-gv'
+    | '/goc-update'
+    | '/thong-bao'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dang-ky' | '/dang-nhap'
-  id: '__root__' | '/' | '/dang-ky' | '/dang-nhap'
+  to:
+    | '/'
+    | '/dang-ky'
+    | '/dang-nhap'
+    | '/bang-tin'
+    | '/dien-dan-gv'
+    | '/goc-update'
+    | '/thong-bao'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/dang-ky'
+    | '/dang-nhap'
+    | '/_authenticated/bang-tin'
+    | '/_authenticated/dien-dan-gv'
+    | '/_authenticated/goc-update'
+    | '/_authenticated/thong-bao'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   DangKyRoute: typeof DangKyRoute
   DangNhapRoute: typeof DangNhapRoute
 }
@@ -66,6 +132,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dang-ky': {
@@ -82,11 +155,57 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DangNhapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/bang-tin': {
+      id: '/_authenticated/bang-tin'
+      path: '/bang-tin'
+      fullPath: '/bang-tin'
+      preLoaderRoute: typeof AuthenticatedBangTinRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dien-dan-gv': {
+      id: '/_authenticated/dien-dan-gv'
+      path: '/dien-dan-gv'
+      fullPath: '/dien-dan-gv'
+      preLoaderRoute: typeof AuthenticatedDienDanGvRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/goc-update': {
+      id: '/_authenticated/goc-update'
+      path: '/goc-update'
+      fullPath: '/goc-update'
+      preLoaderRoute: typeof AuthenticatedGocUpdateRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/thong-bao': {
+      id: '/_authenticated/thong-bao'
+      path: '/thong-bao'
+      fullPath: '/thong-bao'
+      preLoaderRoute: typeof AuthenticatedThongBaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBangTinRoute: typeof AuthenticatedBangTinRoute
+  AuthenticatedDienDanGvRoute: typeof AuthenticatedDienDanGvRoute
+  AuthenticatedGocUpdateRoute: typeof AuthenticatedGocUpdateRoute
+  AuthenticatedThongBaoRoute: typeof AuthenticatedThongBaoRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBangTinRoute: AuthenticatedBangTinRoute,
+  AuthenticatedDienDanGvRoute: AuthenticatedDienDanGvRoute,
+  AuthenticatedGocUpdateRoute: AuthenticatedGocUpdateRoute,
+  AuthenticatedThongBaoRoute: AuthenticatedThongBaoRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   DangKyRoute: DangKyRoute,
   DangNhapRoute: DangNhapRoute,
 }
